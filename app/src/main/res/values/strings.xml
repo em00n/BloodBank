@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">BloodBank</string>
+    <string name="action_settings">Settings</string>
+    <string-array name="dist_array">
+        <item>gopalgong</item>
+        <item>magura</item>
+        <item>faridpur</item>
+        <item>rajbari</item>
+    </string-array>
+    <string-array name="blood_array">
+        <item>a+</item>
+        <item>a-</item>
+        <item>b+</item>
+        <item>b-</item>
+    </string-array>
+</resources>
