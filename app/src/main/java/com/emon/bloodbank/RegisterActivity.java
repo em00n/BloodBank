@@ -30,6 +30,10 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     String dist, blood, name, mobile;
+    String []bloodGroup;
+    String []distGroup;
+    ArrayAdapter<String>adapter;
+    ArrayAdapter<String>adapter2;
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -47,20 +51,16 @@ public class RegisterActivity extends AppCompatActivity {
         distSP = findViewById(R.id.dist);
         bloodSP = findViewById(R.id.blood);
 
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.dist_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        distSP.setAdapter(adapter);
+        bloodGroup=getResources().getStringArray(R.array.blood_array);
+        adapter=new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,bloodGroup);
+        bloodSP.setAdapter(adapter);
 
-        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this,R.array.blood_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        bloodSP.setAdapter(adapter2);
+        distGroup=getResources().getStringArray(R.array.dist_array);
+        adapter2=new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,distGroup);
+        distSP.setAdapter(adapter2);
 
-        dist = distSP.getSelectedItem().toString();
-        blood = bloodSP.getSelectedItem().toString();
+
+
 
         mRegister = (Button) findViewById(R.id.register);
         mLogin = (Button) findViewById(R.id.login);
@@ -80,6 +80,8 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View v) {
                 name = nameET.getText().toString().trim();
                 mobile = mobileET.getText().toString().trim();
+                dist = distSP.getSelectedItem().toString();
+                blood = bloodSP.getSelectedItem().toString();
                 String email = mEmailEdit.getText().toString().trim();
                 String password = mPasswordEdit.getText().toString().trim();
                 if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(name) && !TextUtils.isEmpty(mobile) && !TextUtils.isEmpty(dist) && !TextUtils.isEmpty(blood)) {
