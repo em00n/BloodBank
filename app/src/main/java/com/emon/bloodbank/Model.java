@@ -1,16 +1,34 @@
 package com.emon.bloodbank;
 
-public class Post {
-    private String name,mobile,disc,blood;
+public class Model {
+    private String name,mobile,disc,blood,lastDonate,uid;
 
-    public Post() {
+    public Model() {
     }
 
-    public Post(String name, String mobile, String disc, String blood) {
+    public Model(String name, String mobile, String disc, String blood,String lastDonate,String uid) {
         this.name = name;
         this.mobile = mobile;
         this.disc = disc;
         this.blood = blood;
+        this.lastDonate=lastDonate;
+        this.uid=uid;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getLastDonate() {
+        return lastDonate;
+    }
+
+    public void setLastDonate(String lastDonate) {
+        this.lastDonate = lastDonate;
     }
 
     public String getName() {

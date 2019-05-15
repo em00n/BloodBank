@@ -3,7 +3,7 @@
     package="com.emon.bloodbank">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:name=".FirebaseRTDB"
@@ -13,10 +13,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".BloodgrouplistActivity"></activity>
+        <activity android:name=".ProfileActivity"></activity>
         <activity
-            android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name=".ShowActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".DetailsActivity" />
+        <activity android:name=".UpDeActivity" />
+        <activity android:name=".PostActivity" />
+        <activity android:name=".ForgetPassActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity
+            android:name=".SearchActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".BloodgrouplistActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".RegisterActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -38,15 +38,18 @@ public class BloodgrouplistActivity extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-    FirebaseRecyclerOptions<Post> option;
-    FirebaseRecyclerAdapter<Post,MyRecyclerViewHolder> adapter;
+    FirebaseRecyclerOptions<Model> option;
+    FirebaseRecyclerAdapter<Model,MyRecyclerViewHolder> adapter;
 
-    Post selectedpost;
+    Model selectedpost;
     String selectedkey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bloodgrouplist);
+
+        getSupportActionBar().setTitle("Donner List");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //recyclerview
         recyclerView=findViewById(R.id.recycler_view);
@@ -87,35 +90,33 @@ public class BloodgrouplistActivity extends AppCompatActivity {
 
     //show data
     private void showData() {
-        option= new FirebaseRecyclerOptions.Builder<Post>()
-                .setQuery(databaseReference,Post.class)
+        option= new FirebaseRecyclerOptions.Builder<Model>()
+                .setQuery(databaseReference, Model.class)
                 .build();
-        adapter= new FirebaseRecyclerAdapter<Post, MyRecyclerViewHolder>(option) {
+        adapter= new FirebaseRecyclerAdapter<Model, MyRecyclerViewHolder>(option) {
             @Override
-            protected void onBindViewHolder(@NonNull MyRecyclerViewHolder holder, int position, @NonNull final Post model) {
-                holder.nameTV.setText(model.getName());
-                holder.distTV.setText(model.getDisc());
-                holder.bloodTV.setText(model.getBlood());
-
-                holder.setOnLongClickListener(new OnLongClickListener() {
+            protected void onBindViewHolder(@NonNull MyRecyclerViewHolder holder,final int position, @NonNull final Model model) {
+                holder.nameTV.setText("Name : "+model.getName());
+                holder.distTV.setText("Address : "+model.getDisc());
+                holder.bloodTV.setText("Blood Group : "+model.getBlood());
+                holder.lastDonateTV.setText("Last Donate : "+model.getLastDonate());
+                holder.imageView.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onLongClick(View view, int position) {
-                       // selectedkey=getSnapshots().getSnapshot(position).getKey();
-                        callnum=model.getMobile();
+                    public void onClick(View v) {
+
+                        callnum = model.getMobile();
                         call(position);
                     }
 
-//                            @Override
-//                            public void onClick(View view, int position) {
-//
-//                            }
+
+
                 });
             }
 
             @NonNull
             @Override
             public MyRecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                View itemView= LayoutInflater.from(getBaseContext()).inflate(R.layout.item_post,parent,false);
+                View itemView= LayoutInflater.from(getBaseContext()).inflate(R.layout.item_reg,parent,false);
                 return new MyRecyclerViewHolder(itemView);
             }
         };
@@ -125,7 +126,7 @@ public class BloodgrouplistActivity extends AppCompatActivity {
 
     }
 
-    //update and delete
+    //call
     public void call(int view) {
         AlertDialog.Builder alert=new AlertDialog.Builder(this);
         alert.setTitle("Call Blood Doner");
