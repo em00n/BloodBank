@@ -11,7 +11,9 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -19,7 +21,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 private  long backPressedTime=1;
-CardView donarList,searchDoner,post;
+CardView donarList,searchDoner,post,rules;
+ViewFlipper viewFlipper;
     String dist, blood, name, mobile,lastDonate,uid;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -31,6 +34,7 @@ CardView donarList,searchDoner,post;
        donarList=findViewById(R.id.donerList);
        searchDoner=findViewById(R.id.searchDonner);
        post=findViewById(R.id.post);
+       rules=findViewById(R.id.rules);
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference().child("BLOOD");
@@ -41,12 +45,19 @@ CardView donarList,searchDoner,post;
        dist=getIntent().getStringExtra("dist");
        mobile=getIntent().getStringExtra("mobile");
        lastDonate=getIntent().getStringExtra("lastDonate");
+        viewFlipper=findViewById(R.id.slideVF);
         uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
 
         if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(mobile) && !TextUtils.isEmpty(dist) && !TextUtils.isEmpty(blood)&&!TextUtils.isEmpty(lastDonate)) {
             addData();
         }
 
+
+        //image sliding
+        int [] images={R.drawable.four,R.drawable.one,R.drawable.two,R.drawable.three,};
+        for (int image:images){
+            flipperImage(image);
+        }
 
 
         donarList.setOnClickListener(new View.OnClickListener() {
@@ -68,14 +79,35 @@ CardView donarList,searchDoner,post;
                 startActivity(new Intent(MainActivity.this,ShowActivity.class));
             }
         });
+        rules.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,RulesActivity.class));
+            }
+        });
 
     }
+
+
 
     private void addData() {
 
         Model model = new Model(name, mobile, dist, blood,lastDonate,uid);
         databaseReference.push()
                 .setValue(model);
+    }
+
+    //this methode use in slideing
+    public void flipperImage(int image){
+        ImageView imageView=new ImageView(this);
+        imageView.setImageResource(image);
+       imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+        viewFlipper.addView(imageView);
+        viewFlipper.setFlipInterval(4000); // 2 sec
+        viewFlipper.setAutoStart(true);
+        //animation
+        viewFlipper.setInAnimation(this,android.R.anim.slide_in_left);
+
     }
 
     @Override
@@ -103,7 +135,6 @@ CardView donarList,searchDoner,post;
         else  if (id == R.id.profile) {
             Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
             startActivity(intent);
-            finish();
             return true;
         }
 
