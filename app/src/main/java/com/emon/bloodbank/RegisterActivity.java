@@ -1,5 +1,6 @@
 package com.emon.bloodbank;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ public class RegisterActivity extends AppCompatActivity {
     private Button mLogin;
     private TextView gotoLogin;
     private FirebaseAuth mAuth;
+    ProgressDialog pd;
 
     String dist, blood, name, mobile,lastDonate,uid;
     String []bloodGroup;
@@ -79,6 +81,10 @@ public class RegisterActivity extends AppCompatActivity {
         mRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                pd=new ProgressDialog(RegisterActivity.this);
+                pd.setTitle("Please wait");
+                pd.setMessage("Loading....");
+                pd.show();
                 name = nameET.getText().toString().trim();
                 mobile = mobileET.getText().toString().trim();
                 dist = distSP.getSelectedItem().toString();
@@ -91,7 +97,7 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-
+                                pd.dismiss();
                                 Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 intent.putExtra("blood",blood);

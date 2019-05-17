@@ -62,7 +62,7 @@ public class UpDeActivity extends AppCompatActivity {
 
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference("POST");
+        databaseReference = firebaseDatabase.getReference().child("POST");
 
         updateBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,8 +74,6 @@ public class UpDeActivity extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(UpDeActivity.this, "Updated", Toast.LENGTH_SHORT).show();
-                                Intent intent=new Intent(UpDeActivity.this,ShowActivity.class);
-                                startActivity(intent);
                                 finish();
 
                             }
@@ -97,9 +95,7 @@ public class UpDeActivity extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                Toast.makeText(UpDeActivity.this, "delete", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(UpDeActivity.this, ShowActivity.class);
-                                startActivity(intent);
+                                Toast.makeText(UpDeActivity.this, "deleted", Toast.LENGTH_SHORT).show();
                                 finish();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
