@@ -17,7 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class ProfileUpdateActivity extends AppCompatActivity {
-    private EditText lastdonateET, addressET, numberET,nameET;
+    private EditText lastdonateET, addressET, numberET, nameET;
     private Button updateBTN;
     private FirebaseAuth mAuth;
     String useruid, bloodgroup;
@@ -25,6 +25,7 @@ public class ProfileUpdateActivity extends AppCompatActivity {
 
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,14 +43,14 @@ public class ProfileUpdateActivity extends AppCompatActivity {
         String number = getIntent().getStringExtra("number");
         String address = getIntent().getStringExtra("address");
         String lastdonate = getIntent().getStringExtra("lastdonate");
-         bloodgroup = getIntent().getStringExtra("bloodgroup");
+        bloodgroup = getIntent().getStringExtra("bloodgroup");
 
         nameET.setText(name);
         numberET.setText(number);
         addressET.setText(address);
         lastdonateET.setText(lastdonate);
 
-        useruid= FirebaseAuth.getInstance().getCurrentUser().getUid();
+        useruid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         FirebaseApp.initializeApp(this);
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("BLOOD");
@@ -59,13 +60,12 @@ public class ProfileUpdateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 databaseReference
                         .child(selectedkey)
-                        .setValue(new Model(nameET.getText().toString(), numberET.getText().toString(), addressET.getText().toString(),bloodgroup,lastdonateET.getText().toString(),useruid))
+                        .setValue(new Model(nameET.getText().toString(), numberET.getText().toString(), addressET.getText().toString(), bloodgroup, lastdonateET.getText().toString(), useruid))
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Toast.makeText(ProfileUpdateActivity.this, "Updated", Toast.LENGTH_SHORT).show();
-//                                Intent intent=new Intent(ProfileUpdateActivity.this,ProfileActivity.class);
-//                                startActivity(intent);
+
                                 finish();
 
                             }
